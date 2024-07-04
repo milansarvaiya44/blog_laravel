@@ -33,7 +33,7 @@ class TagController extends Controller
 
         $tag = Tag::create($request->all());
 
-        return ResponseHelper::successResponse(TagResource($tag));
+        return ResponseHelper::successResponse(new TagResource($tag));
     }
 
     public function show($id)
@@ -42,7 +42,7 @@ class TagController extends Controller
         if(!$tag){
             return response()->json(['error' => true,'message' => 'record not found'], 200);            
         }
-        return ResponseHelper::successResponse(TagResource($tag));
+        return ResponseHelper::successResponse(new TagResource($tag));
     }
 
     public function customUpdate(Request $request, $id)
@@ -62,7 +62,7 @@ class TagController extends Controller
 
         $tag->update($request->all());
 
-        return ResponseHelper::successResponse(TagResource($tag));
+        return ResponseHelper::successResponse(new TagResource($tag));
 
     }
 
