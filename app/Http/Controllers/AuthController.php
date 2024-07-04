@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\ResponseHelper;
+
 
 class AuthController extends Controller
 {
@@ -19,7 +21,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return ResponseHelper::errorResponse($validator->errors());
         }
 
         $user = User::create([
@@ -30,10 +32,12 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
+        // return response()->json();
+
+         return ResponseHelper::successResponse([
             'access_token' => $token,
             'token_type' => 'Bearer',
-        ]);
+        ],'user register successfully');
     }
 
     public function login(Request $request)
@@ -46,16 +50,21 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
+        /*return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
-        ]);
+        ]);*/
+
+         return ResponseHelper::successResponse([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ],'user login successfully');
     }
 
     public function logout()
     {
         Auth::user()->tokens()->delete();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['error' => false,'message' => 'Successfully logged out']);
     }
 }

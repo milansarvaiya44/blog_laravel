@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\ResponseHelper;
 
 class CategoryController extends Controller
 {
